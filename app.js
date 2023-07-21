@@ -8,9 +8,8 @@ const swaggerDocument = require("./swagger.json");
 
 // Additional utils
 const globalErrorHandler = require("./controllers/errorController");
-const UserRouter = require("./routes/UserRoutes");
-const adminRouter = require("./routes/adminRoutes");
-const LinksRouter = require("./routes/LinksRoutes");
+const UserRouter = require("./routes/UserRoute");
+const DoctorRouter = require("./routes/DoctorRoute");
 
 // 1) INIT FUNCTIONS
 const app = express();
@@ -37,8 +36,7 @@ app.use(compression());
 
 // 3) ROUTES
 app.use("/api/v1/user", UserRouter);
-app.use("/api/v1/admin", adminRouter);
-app.use("/api/v1/link", LinksRouter);
+app.use("/api/v1/doctor", DoctorRouter);
 
 // app.all("*", (req, res, next) => {
 //     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
