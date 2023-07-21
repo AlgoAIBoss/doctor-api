@@ -1,0 +1,804 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Job-Searching-Platform API Documentation",
+      "description": "This documentation contains four mains routes with CRUD operations: Profile, Chat, Interview, Job, Company and Application",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "apis": ["src/routes/*.js"],
+    "host": "https://fyp-backend-api.herokuapp.com",
+    "basePath": "/api/v1",
+    "tags": [
+      {
+        "name": "Candidate Authentication",
+        "description": "Operations about candidate authentication.",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "http://swagger.io"
+        }
+      },
+      {
+        "name": "Photo",
+        "description": "API for Photo-Gallery CRUD operations.",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "http://swagger.io"
+        }
+      },
+      {
+        "name": "Job",
+        "description": "API for story CRUD operations.",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "http://swagger.io"
+        }
+      },
+      {
+        "name": "Video",
+        "description": "API for video CRUD operations.",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "http://swagger.io"
+        }
+      },
+      {
+        "name": "Research",
+        "description": "API for research CRUD operations.",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "http://swagger.io"
+        }
+      },
+      {
+        "name": "Podcast",
+        "description": "API for podcast CRUD operations.",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "http://swagger.io"
+        }
+      }
+    ],
+    "schemes": ["https"],
+    "consumes": ["application/json", "application/xml"],
+    "produces": ["application/json", "application/xml"],
+    "paths": {
+      "/candidates/login": {
+        "post": {
+          "tags": ["Candidate Authentication"],
+          "summary": "login to candidate account.",
+          "description": "This can only be done by the logged in candidate not recruiter for this you need password and email cridentials.",
+          "parameters": [
+            {
+              "name": "Candidate",
+              "in": "body",
+              "description": "Candidate that we want to login",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/candidateLogin"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/candidateLogin"
+              }
+            }
+          }
+        }
+      },
+  
+      "/candidates/fogrot_password": {
+        "get": {
+          "tags": ["Candidate Authentication"],
+          "summary": "recover candidate account.",
+          "description": "This can only be done by the logged in candidate not recruiter for this you need password and email cridentials.",
+          "parameters": [
+            {
+              "name": "Candidate",
+              "in": "body",
+              "description": "Candidate that we want to login",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/candidateLogin"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/candidateLogin"
+              }
+            }
+          }
+        }
+      },
+  
+      "/candidates/reset_password": {
+        "patch": {
+          "tags": ["Candidate Authentication"],
+          "summary": "reset candidate account password.",
+          "description": "This can only be done by the logged in candidate not recruiter for this you need password and email cridentials.",
+          "parameters": [
+            {
+              "name": "Candidate",
+              "in": "body",
+              "description": "Candidate that we want to login",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/candidateLogin"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/candidateLogin"
+              }
+            }
+          }
+        }
+      },
+  
+      "/candidates/delete": {
+        "delete": {
+          "tags": ["Candidate Authentication"],
+          "summary": "delete candidate account.",
+          "description": "This can only be done by the logged in candidate not recruiter for this you need password and email cridentials.",
+          "parameters": [
+            {
+              "name": "Candidate",
+              "in": "body",
+              "description": "Candidate that we want to login",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/candidateLogin"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/candidateLogin"
+              }
+            }
+          }
+        }
+      },
+  
+      "/candidates/logout": {
+        "get": {
+          "tags": ["Candidate Authentication"],
+          "summary": "logout of admin panel.",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+  
+      "/photo": {
+        "get": {
+          "summary": "Get all Photo",
+          "description": "Create Photo",
+          "tags": ["Photo"],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        },
+        "post": {
+          "summary": "Creaated new photo",
+          "description": "Create Photo",
+          "produces": ["application/json"],
+          "tags": ["Photo"],
+          "parameters": [
+            {
+              "name": "POST",
+              "in": "body",
+              "description": "Only admin can create photo",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/createPhoto"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/createPhoto"
+              }
+            }
+          }
+        }
+      },
+  
+      "/photo/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of user that we want to find",
+            "type": "integer"
+          }
+        ],
+  
+        "patch": {
+          "summary": "Update Photo",
+          "description": "Update Photo",
+          "tags": ["Photo"],
+          "parameters": [
+            {
+              "name": "PATCH",
+              "in": "body",
+              "description": "Only admin can create photo",
+              "schema": {
+                "$ref": "#/definitions/updatePhoto"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Photo is successfully updated!",
+              "schema": {
+                "$ref": "#/definitions/updatePhoto"
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Photo"],
+          "summary": "Delete Photo",
+          "description": "Delete Photo",
+          "parameters": [
+            {
+              "name": "DELETE",
+              "in": "body",
+              "description": "Only admin can create Photo"
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Photo is successfully updated!"
+            }
+          }
+        }
+      },
+  
+      "/jobs": {
+        "get": {
+          "tags": ["Job"],
+          "summary": "Get all Story",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        },
+        "post": {
+          "tags": ["Job"],
+          "summary": "Create Story",
+          "description": "Create Story",
+          "parameters": [
+            {
+              "name": "POST",
+              "in": "body",
+              "description": "Only admin can create story",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/createStory"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/createStory"
+              }
+            }
+          }
+        }
+      },
+  
+      "/story/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of story that we want to find",
+            "type": "integer"
+          }
+        ],
+  
+        "patch": {
+          "tags": ["Job"],
+          "summary": "Update Story",
+          "description": "Update Story",
+          "parameters": [
+            {
+              "name": "PATCH",
+              "in": "body",
+              "description": "Only admin can create story",
+              "schema": {
+                "$ref": "#/definitions/updateStory"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Story is successfully updated!",
+              "schema": {
+                "$ref": "#/definitions/updateStory"
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Job"],
+          "summary": "Delete Story",
+          "description": "Delete Story",
+          "parameters": [
+            {
+              "name": "DELETE",
+              "in": "body",
+              "description": "Only admin can create story"
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Story is successfully updated!"
+            }
+          }
+        }
+      },
+  
+      "/video": {
+        "get": {
+          "tags": ["Video"],
+          "summary": "Get all Video",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        },
+        "post": {
+          "tags": ["Video"],
+          "summary": "Create Video",
+          "description": "Create Video",
+          "parameters": [
+            {
+              "name": "POST",
+              "in": "body",
+              "description": "Only admin can create video",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/createVideo"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/createVideo"
+              }
+            }
+          }
+        }
+      },
+  
+      "/video/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of video that we want to find",
+            "type": "integer"
+          }
+        ],
+  
+        "patch": {
+          "tags": ["Video"],
+          "summary": "Update Video",
+          "description": "Update Video",
+          "parameters": [
+            {
+              "name": "PATCH",
+              "in": "body",
+              "description": "Only admin can create video",
+              "schema": {
+                "$ref": "#/definitions/updateVideo"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Video is successfully updated!",
+              "schema": {
+                "$ref": "#/definitions/updateVideo"
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Video"],
+          "summary": "Delete Video",
+          "description": "Delete Video",
+          "parameters": [
+            {
+              "name": "DELETE",
+              "in": "body",
+              "description": "Only admin can create video"
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Video is successfully updated!"
+            }
+          }
+        }
+      },
+  
+      "/research": {
+        "get": {
+          "tags": ["Research"],
+          "summary": "Get all Research",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        },
+        "post": {
+          "tags": ["Research"],
+          "summary": "Create Research",
+          "description": "Create Research",
+          "parameters": [
+            {
+              "name": "POST",
+              "in": "body",
+              "description": "Only admin can create research",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/createResearch"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/createResearch"
+              }
+            }
+          }
+        }
+      },
+  
+      "/research/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of story that we want to find",
+            "type": "integer"
+          }
+        ],
+  
+        "patch": {
+          "tags": ["Research"],
+          "summary": "Update Research",
+          "description": "Update Research",
+          "parameters": [
+            {
+              "name": "PATCH",
+              "in": "body",
+              "description": "Only admin can create Research",
+              "schema": {
+                "$ref": "#/definitions/updateResearch"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Research is successfully updated!",
+              "schema": {
+                "$ref": "#/definitions/updateResearch"
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Research"],
+          "summary": "Delete Research",
+          "description": "Delete Research",
+          "parameters": [
+            {
+              "name": "DELETE",
+              "in": "body",
+              "description": "Only admin can create Research"
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Story is successfully updated!"
+            }
+          }
+        }
+      },
+      "/podcast": {
+        "get": {
+          "tags": ["Podcast"],
+          "summary": "Get all Podcast",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        },
+        "post": {
+          "tags": ["Podcast"],
+          "summary": "Create Podcast",
+          "description": "Create Podcast",
+          "parameters": [
+            {
+              "name": "POST",
+              "in": "body",
+              "description": "Only admin can create Podcast",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/createPodcast"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/createPodcast"
+              }
+            }
+          }
+        }
+      },
+  
+      "/podcast/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of Podcast that we want to find",
+            "type": "integer"
+          }
+        ],
+  
+        "patch": {
+          "tags": ["Podcast"],
+          "summary": "Update Podcast",
+          "description": "Update Podcast",
+          "parameters": [
+            {
+              "name": "PATCH",
+              "in": "body",
+              "description": "Only admin can create Podcast",
+              "schema": {
+                "$ref": "#/definitions/updatePodcast"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Podcast is successfully updated!",
+              "schema": {
+                "$ref": "#/definitions/updatePodcast"
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Podcast"],
+          "summary": "Delete Podcast",
+          "description": "Delete Podcast",
+          "parameters": [
+            {
+              "name": "DELETE",
+              "in": "body",
+              "description": "Only admin can create Podcast"
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Podcast is successfully updated!"
+            }
+          }
+        }
+      }
+    },
+    
+  
+    "definitions": {
+      "candidateLogin": {
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+  
+      "createPhoto": {
+        "required": ["title", "body"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "body": {
+            "type": "string",
+            "uniqueItems": true
+          }
+        }
+      },
+  
+      "updatePhoto": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "body": {
+            "type": "string",
+            "uniqueItems": true
+          }
+        }
+      },
+  
+      "createStory": {
+        "required": ["title", "body"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "body": {
+            "type": "string",
+            "uniqueItems": true
+          }
+        }
+      },
+  
+      "updateStory": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "body": {
+            "type": "string",
+            "uniqueItems": true
+          }
+        }
+      },
+  
+      "createVideo": {
+        "required": ["link"],
+        "properties": {
+          "link": {
+            "type": "string",
+            "uniqueItems": true
+          }
+        }
+      },
+  
+      "updateVideo": {
+        "properties": {
+          "link": {
+            "type": "string",
+            "uniqueItems": true
+          }
+        }
+      },
+  
+      "createResearch": {
+        "required": [
+          "description",
+          "title",
+          "shortDesc",
+          "producer",
+          "catch",
+          "img"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "shortDesc": {
+            "type": "string"
+          },
+          "producer": {
+            "type": "string"
+          },
+          "catch": {
+            "type": "string"
+          },
+          "img": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          }
+        }
+      },
+  
+      "updateResearch": {
+        "properties": {
+          "link": {
+            "type": "string",
+            "uniqueItems": true
+          }
+        }
+      },
+  
+      "createPodcast": {
+        "required": ["link"],
+        "properties": {
+          "link": {
+            "type": "string",
+            "uniqueItems": true
+          }
+        }
+      },
+  
+      "updatePodcast": {
+        "properties": {
+          "link": {
+            "type": "string",
+            "uniqueItems": true
+          }
+        }
+      }
+    }
+  }
