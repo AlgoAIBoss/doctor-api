@@ -59,7 +59,7 @@ The main technologies used in this project are:
 <!-- backend -->
 
 - Backend <br/>
-  <a href="https://nodejs.org/" target="_blank"> <img src="https://img.icons8.com/color/48/000000/nodejs.png"/> </a><a href="https://expressjs.com/" target="_blank"> <img src="https://img.icons8.com/color/48/000000/express.png"/> </a><a href="https://mongodb.com/" target="_blank"> <img src="https://img.icons8.com/color/48/000000/mongodb.png"/> </a><a href="https://swagger.io/" target="_blank"> <img src="https://static-00.iconduck.com/assets.00/swagger-icon-512x512-halz44im.png"/> </a>
+  <a href="https://nodejs.org/" target="_blank"> <img src="https://img.icons8.com/color/48/000000/nodejs.png"/> </a><a href="https://expressjs.com/" target="_blank"> <img src="https://img.icons8.com/color/48/000000/express.png"/> </a><a href="https://mongodb.com/" target="_blank"> <img src="https://img.icons8.com/color/48/000000/mongodb.png"/> </a><a href="https://swagger.io/" target="_blank"> <img src="https://icons8.com/icon/rdKV2dee9wxd/cloud-function"/> </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
