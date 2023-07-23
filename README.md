@@ -3,9 +3,6 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Job-Searching-Platform">
-    <img src="./Logo.png" alt="Logo" width="80" height="80">
-  </a>
 
   <h3 align="center">Doctor API</h3>
 
