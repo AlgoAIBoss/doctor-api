@@ -7,7 +7,7 @@ const swaggerUI = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 
 // Additional utils
-const globalErrorHandler = require("./controllers/errorController");
+const globalErrorHandler = require("./controllers/ErrorController");
 const UserRouter = require("./routes/UserRoute");
 const DoctorRouter = require("./routes/DoctorRoute");
 

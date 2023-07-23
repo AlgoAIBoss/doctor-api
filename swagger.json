@@ -2,83 +2,59 @@
     "swagger": "2.0",
     "info": {
       "version": "1.0.0",
-      "title": "Job-Searching-Platform API Documentation",
-      "description": "This documentation contains four mains routes with CRUD operations: Profile, Chat, Interview, Job, Company and Application",
+      "title": "Doctor Appointment API Documentation",
+      "description": "This documentation contains four mains routes with CRUD operations: Profile, Book Appointment",
       "license": {
         "name": "MIT",
         "url": "https://opensource.org/licenses/MIT"
       }
     },
     "apis": ["src/routes/*.js"],
-    "host": "https://fyp-backend-api.herokuapp.com",
+    "host": "localhost:3000",
     "basePath": "/api/v1",
     "tags": [
       {
-        "name": "Candidate Authentication",
-        "description": "Operations about candidate authentication.",
+        "name": "Doctor Authentication",
+        "description": "Operations about doctor authentication.",
         "externalDocs": {
           "description": "Find out more",
           "url": "http://swagger.io"
         }
       },
       {
-        "name": "Photo",
-        "description": "API for Photo-Gallery CRUD operations.",
+        "name": "User Authentication",
+        "description": "Operations about user authentication.",
         "externalDocs": {
           "description": "Find out more",
           "url": "http://swagger.io"
         }
       },
       {
-        "name": "Job",
-        "description": "API for story CRUD operations.",
-        "externalDocs": {
-          "description": "Find out more",
-          "url": "http://swagger.io"
-        }
-      },
-      {
-        "name": "Video",
-        "description": "API for video CRUD operations.",
-        "externalDocs": {
-          "description": "Find out more",
-          "url": "http://swagger.io"
-        }
-      },
-      {
-        "name": "Research",
-        "description": "API for research CRUD operations.",
-        "externalDocs": {
-          "description": "Find out more",
-          "url": "http://swagger.io"
-        }
-      },
-      {
-        "name": "Podcast",
-        "description": "API for podcast CRUD operations.",
+        "name": "Book Appointment",
+        "description": "API for booking appointment CRUD operations.",
         "externalDocs": {
           "description": "Find out more",
           "url": "http://swagger.io"
         }
       }
     ],
-    "schemes": ["https"],
+    "schemes": ["http"],
     "consumes": ["application/json", "application/xml"],
     "produces": ["application/json", "application/xml"],
     "paths": {
-      "/candidates/login": {
+      "/doctor/login": {
         "post": {
-          "tags": ["Candidate Authentication"],
-          "summary": "login to candidate account.",
-          "description": "This can only be done by the logged in candidate not recruiter for this you need password and email cridentials.",
+          "tags": ["Doctor Authentication"],
+          "summary": "login to doctor account.",
+          "description": "This can only be done by the logged in doctor for this you need password and email cridentials.",
           "parameters": [
             {
-              "name": "Candidate",
+              "name": "Doctor",
               "in": "body",
-              "description": "Candidate that we want to login",
+              "description": "Doctor that we want to login",
               "required": true,
               "schema": {
-                "$ref": "#/definitions/candidateLogin"
+                "$ref": "#/definitions/doctorLogin"
               }
             }
           ],
@@ -87,100 +63,44 @@
             "200": {
               "description": "Successful operation!",
               "schema": {
-                "$ref": "#/definitions/candidateLogin"
+                "$ref": "#/definitions/doctorLogin"
               }
             }
           }
         }
       },
-  
-      "/candidates/fogrot_password": {
+
+      "/doctor/signup": {
+        "post": {
+          "tags": ["Doctor Authentication"],
+          "summary": "Sign up to doctor account.",
+          "description": "This can only be done by the logged in doctor for this you need password and email cridentials.",
+          "parameters": [
+            {
+              "name": "Doctor",
+              "in": "body",
+              "description": "Doctor that we want to login",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/doctorLogin"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/doctorLogin"
+              }
+            }
+          }
+        }
+      },
+
+      "/doctor/logout": {
         "get": {
-          "tags": ["Candidate Authentication"],
-          "summary": "recover candidate account.",
-          "description": "This can only be done by the logged in candidate not recruiter for this you need password and email cridentials.",
-          "parameters": [
-            {
-              "name": "Candidate",
-              "in": "body",
-              "description": "Candidate that we want to login",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/candidateLogin"
-              }
-            }
-          ],
-          "produces": ["application/json"],
-          "responses": {
-            "200": {
-              "description": "Successful operation!",
-              "schema": {
-                "$ref": "#/definitions/candidateLogin"
-              }
-            }
-          }
-        }
-      },
-  
-      "/candidates/reset_password": {
-        "patch": {
-          "tags": ["Candidate Authentication"],
-          "summary": "reset candidate account password.",
-          "description": "This can only be done by the logged in candidate not recruiter for this you need password and email cridentials.",
-          "parameters": [
-            {
-              "name": "Candidate",
-              "in": "body",
-              "description": "Candidate that we want to login",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/candidateLogin"
-              }
-            }
-          ],
-          "produces": ["application/json"],
-          "responses": {
-            "200": {
-              "description": "Successful operation!",
-              "schema": {
-                "$ref": "#/definitions/candidateLogin"
-              }
-            }
-          }
-        }
-      },
-  
-      "/candidates/delete": {
-        "delete": {
-          "tags": ["Candidate Authentication"],
-          "summary": "delete candidate account.",
-          "description": "This can only be done by the logged in candidate not recruiter for this you need password and email cridentials.",
-          "parameters": [
-            {
-              "name": "Candidate",
-              "in": "body",
-              "description": "Candidate that we want to login",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/candidateLogin"
-              }
-            }
-          ],
-          "produces": ["application/json"],
-          "responses": {
-            "200": {
-              "description": "Successful operation!",
-              "schema": {
-                "$ref": "#/definitions/candidateLogin"
-              }
-            }
-          }
-        }
-      },
-  
-      "/candidates/logout": {
-        "get": {
-          "tags": ["Candidate Authentication"],
+          "tags": ["Doctor Authentication"],
           "summary": "logout of admin panel.",
           "responses": {
             "200": {
@@ -190,121 +110,19 @@
         }
       },
   
-      "/photo": {
+      "/doctor/fogrot_password": {
         "get": {
-          "summary": "Get all Photo",
-          "description": "Create Photo",
-          "tags": ["Photo"],
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        },
-        "post": {
-          "summary": "Creaated new photo",
-          "description": "Create Photo",
-          "produces": ["application/json"],
-          "tags": ["Photo"],
+          "tags": ["Doctor Authentication"],
+          "summary": "recover user account.",
+          "description": "This can only be done by the logged in doctor for this you need password and email cridentials.",
           "parameters": [
             {
-              "name": "POST",
+              "name": "Doctor",
               "in": "body",
-              "description": "Only admin can create photo",
+              "description": "Doctor that we want to login",
               "required": true,
               "schema": {
-                "$ref": "#/definitions/createPhoto"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successful operation!",
-              "schema": {
-                "$ref": "#/definitions/createPhoto"
-              }
-            }
-          }
-        }
-      },
-  
-      "/photo/{id}": {
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "ID of user that we want to find",
-            "type": "integer"
-          }
-        ],
-  
-        "patch": {
-          "summary": "Update Photo",
-          "description": "Update Photo",
-          "tags": ["Photo"],
-          "parameters": [
-            {
-              "name": "PATCH",
-              "in": "body",
-              "description": "Only admin can create photo",
-              "schema": {
-                "$ref": "#/definitions/updatePhoto"
-              }
-            }
-          ],
-          "produces": ["application/json"],
-          "responses": {
-            "200": {
-              "description": "Photo is successfully updated!",
-              "schema": {
-                "$ref": "#/definitions/updatePhoto"
-              }
-            }
-          }
-        },
-        "delete": {
-          "tags": ["Photo"],
-          "summary": "Delete Photo",
-          "description": "Delete Photo",
-          "parameters": [
-            {
-              "name": "DELETE",
-              "in": "body",
-              "description": "Only admin can create Photo"
-            }
-          ],
-          "produces": ["application/json"],
-          "responses": {
-            "200": {
-              "description": "Photo is successfully updated!"
-            }
-          }
-        }
-      },
-  
-      "/jobs": {
-        "get": {
-          "tags": ["Job"],
-          "summary": "Get all Story",
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        },
-        "post": {
-          "tags": ["Job"],
-          "summary": "Create Story",
-          "description": "Create Story",
-          "parameters": [
-            {
-              "name": "POST",
-              "in": "body",
-              "description": "Only admin can create story",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/createStory"
+                "$ref": "#/definitions/doctorLogin"
               }
             }
           ],
@@ -313,90 +131,26 @@
             "200": {
               "description": "Successful operation!",
               "schema": {
-                "$ref": "#/definitions/createStory"
+                "$ref": "#/definitions/doctorLogin"
               }
             }
           }
         }
       },
   
-      "/story/{id}": {
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "ID of story that we want to find",
-            "type": "integer"
-          }
-        ],
-  
+      "/doctor/reset_password": {
         "patch": {
-          "tags": ["Job"],
-          "summary": "Update Story",
-          "description": "Update Story",
+          "tags": ["Doctor Authentication"],
+          "summary": "reset user account password.",
+          "description": "This can only be done by the logged in doctor for this you need password and email cridentials.",
           "parameters": [
             {
-              "name": "PATCH",
+              "name": "Doctor",
               "in": "body",
-              "description": "Only admin can create story",
-              "schema": {
-                "$ref": "#/definitions/updateStory"
-              }
-            }
-          ],
-          "produces": ["application/json"],
-          "responses": {
-            "200": {
-              "description": "Story is successfully updated!",
-              "schema": {
-                "$ref": "#/definitions/updateStory"
-              }
-            }
-          }
-        },
-        "delete": {
-          "tags": ["Job"],
-          "summary": "Delete Story",
-          "description": "Delete Story",
-          "parameters": [
-            {
-              "name": "DELETE",
-              "in": "body",
-              "description": "Only admin can create story"
-            }
-          ],
-          "produces": ["application/json"],
-          "responses": {
-            "200": {
-              "description": "Story is successfully updated!"
-            }
-          }
-        }
-      },
-  
-      "/video": {
-        "get": {
-          "tags": ["Video"],
-          "summary": "Get all Video",
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        },
-        "post": {
-          "tags": ["Video"],
-          "summary": "Create Video",
-          "description": "Create Video",
-          "parameters": [
-            {
-              "name": "POST",
-              "in": "body",
-              "description": "Only admin can create video",
+              "description": "Doctor that we want to login",
               "required": true,
               "schema": {
-                "$ref": "#/definitions/createVideo"
+                "$ref": "#/definitions/doctorLogin"
               }
             }
           ],
@@ -405,90 +159,26 @@
             "200": {
               "description": "Successful operation!",
               "schema": {
-                "$ref": "#/definitions/createVideo"
+                "$ref": "#/definitions/doctorLogin"
               }
             }
           }
         }
       },
   
-      "/video/{id}": {
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "ID of video that we want to find",
-            "type": "integer"
-          }
-        ],
-  
-        "patch": {
-          "tags": ["Video"],
-          "summary": "Update Video",
-          "description": "Update Video",
-          "parameters": [
-            {
-              "name": "PATCH",
-              "in": "body",
-              "description": "Only admin can create video",
-              "schema": {
-                "$ref": "#/definitions/updateVideo"
-              }
-            }
-          ],
-          "produces": ["application/json"],
-          "responses": {
-            "200": {
-              "description": "Video is successfully updated!",
-              "schema": {
-                "$ref": "#/definitions/updateVideo"
-              }
-            }
-          }
-        },
+      "/doctor/delete": {
         "delete": {
-          "tags": ["Video"],
-          "summary": "Delete Video",
-          "description": "Delete Video",
+          "tags": ["Doctor Authentication"],
+          "summary": "delete user account.",
+          "description": "This can only be done by the logged in doctor for this you need password and email cridentials.",
           "parameters": [
             {
-              "name": "DELETE",
+              "name": "Doctor",
               "in": "body",
-              "description": "Only admin can create video"
-            }
-          ],
-          "produces": ["application/json"],
-          "responses": {
-            "200": {
-              "description": "Video is successfully updated!"
-            }
-          }
-        }
-      },
-  
-      "/research": {
-        "get": {
-          "tags": ["Research"],
-          "summary": "Get all Research",
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        },
-        "post": {
-          "tags": ["Research"],
-          "summary": "Create Research",
-          "description": "Create Research",
-          "parameters": [
-            {
-              "name": "POST",
-              "in": "body",
-              "description": "Only admin can create research",
+              "description": "Doctor that we want to delete",
               "required": true,
               "schema": {
-                "$ref": "#/definitions/createResearch"
+                "$ref": "#/definitions/doctorLogin"
               }
             }
           ],
@@ -497,89 +187,66 @@
             "200": {
               "description": "Successful operation!",
               "schema": {
-                "$ref": "#/definitions/createResearch"
+                "$ref": "#/definitions/doctorLogin"
               }
             }
           }
         }
       },
-  
-      "/research/{id}": {
+
+      "/doctor/profile/{id}": {
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "ID of story that we want to find",
-            "type": "integer"
+            "description": "ID of doctor that we want to update",
+            "type": "string"
           }
         ],
   
         "patch": {
-          "tags": ["Research"],
-          "summary": "Update Research",
-          "description": "Update Research",
-          "parameters": [
+          "summary": "update doctor profile",
+          "description": "Update Profile",
+          "tags": ["Doctor Authentication"],
+          "parameters": [ 
             {
               "name": "PATCH",
               "in": "body",
-              "description": "Only admin can create Research",
+              "description": "Only doctor can update her profile",
               "schema": {
-                "$ref": "#/definitions/updateResearch"
+                "$ref": "#/definitions/updateProfile"
               }
             }
           ],
           "produces": ["application/json"],
           "responses": {
             "200": {
-              "description": "Research is successfully updated!",
+              "description": "Profile is successfully updated!",
               "schema": {
-                "$ref": "#/definitions/updateResearch"
+                "$ref": "#/definitions/updateProfile"
               }
-            }
-          }
-        },
-        "delete": {
-          "tags": ["Research"],
-          "summary": "Delete Research",
-          "description": "Delete Research",
-          "parameters": [
-            {
-              "name": "DELETE",
-              "in": "body",
-              "description": "Only admin can create Research"
-            }
-          ],
-          "produces": ["application/json"],
-          "responses": {
-            "200": {
-              "description": "Story is successfully updated!"
             }
           }
         }
+        
       },
-      "/podcast": {
-        "get": {
-          "tags": ["Podcast"],
-          "summary": "Get all Podcast",
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        },
+
+
+
+      "/user/login": {
         "post": {
-          "tags": ["Podcast"],
-          "summary": "Create Podcast",
-          "description": "Create Podcast",
+          "tags": ["User Authentication"],
+          "summary": "login to user account.",
+          "description": "This can only be done by the logged in user for this you need password and email cridentials.",
           "parameters": [
             {
-              "name": "POST",
+              "name": "User",
               "in": "body",
-              "description": "Only admin can create Podcast",
+              "description": "User that we want to login",
               "required": true,
               "schema": {
-                "$ref": "#/definitions/createPodcast"
+                "$ref": "#/definitions/doctorLogin"
               }
             }
           ],
@@ -588,63 +255,162 @@
             "200": {
               "description": "Successful operation!",
               "schema": {
-                "$ref": "#/definitions/createPodcast"
+                "$ref": "#/definitions/doctorLogin"
+              }
+            }
+          }
+        }
+      },
+
+      "/user/signup": {
+        "post": {
+          "tags": ["User Authentication"],
+          "summary": "Sign up to user account.",
+          "description": "This can only be done by the logged in user for this you need password and email cridentials.",
+          "parameters": [
+            {
+              "name": "User",
+              "in": "body",
+              "description": "User that we want to login",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/doctorLogin"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/doctorLogin"
+              }
+            }
+          }
+        }
+      },
+
+      "/user/logout": {
+        "get": {
+          "tags": ["User Authentication"],
+          "summary": "logout of admin panel.",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+  
+      "/user/fogrot_password": {
+        "get": {
+          "tags": ["User Authentication"],
+          "summary": "recover user account.",
+          "description": "This can only be done by the logged in user for this you need password and email cridentials.",
+          "parameters": [
+            {
+              "name": "User",
+              "in": "body",
+              "description": "User that we want to login",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/doctorLogin"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/doctorLogin"
               }
             }
           }
         }
       },
   
-      "/podcast/{id}": {
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "ID of Podcast that we want to find",
-            "type": "integer"
-          }
-        ],
-  
+      "/user/reset_password": {
         "patch": {
-          "tags": ["Podcast"],
-          "summary": "Update Podcast",
-          "description": "Update Podcast",
+          "tags": ["User Authentication"],
+          "summary": "reset user account password.",
+          "description": "This can only be done by the logged in user for this you need password and email cridentials.",
           "parameters": [
             {
-              "name": "PATCH",
+              "name": "User",
               "in": "body",
-              "description": "Only admin can create Podcast",
+              "description": "User that we want to login",
+              "required": true,
               "schema": {
-                "$ref": "#/definitions/updatePodcast"
+                "$ref": "#/definitions/doctorLogin"
               }
             }
           ],
           "produces": ["application/json"],
           "responses": {
             "200": {
-              "description": "Podcast is successfully updated!",
+              "description": "Successful operation!",
               "schema": {
-                "$ref": "#/definitions/updatePodcast"
+                "$ref": "#/definitions/doctorLogin"
               }
             }
           }
-        },
+        }
+      },
+  
+      "/user/delete": {
         "delete": {
-          "tags": ["Podcast"],
-          "summary": "Delete Podcast",
-          "description": "Delete Podcast",
+          "tags": ["User Authentication"],
+          "summary": "delete user account.",
+          "description": "This can only be done by the logged in user for this you need password and email cridentials.",
           "parameters": [
             {
-              "name": "DELETE",
+              "name": "User",
               "in": "body",
-              "description": "Only admin can create Podcast"
+              "description": "User that we want to delete",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/doctorLogin"
+              }
             }
           ],
           "produces": ["application/json"],
           "responses": {
             "200": {
-              "description": "Podcast is successfully updated!"
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/doctorLogin"
+              }
+            }
+          }
+        }
+      },
+
+
+
+      "/user/appointment": {
+        "post": {
+          "tags": ["Book Appointment"],
+          "summary": "book a doctor appointment.",
+          "description": "This can only be done by the logged in user for this you need password and email cridentials.",
+          "parameters": [
+            {
+              "name": "User",
+              "in": "body",
+              "description": "Book an appointment at doctors open time slot",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/bookAppointment"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Successful operation!",
+              "schema": {
+                "$ref": "#/definitions/bookAppointment"
+              }
             }
           }
         }
@@ -653,7 +419,7 @@
     
   
     "definitions": {
-      "candidateLogin": {
+      "doctorLogin": {
         "required": ["email", "password"],
         "properties": {
           "email": {
@@ -665,137 +431,28 @@
           }
         }
       },
-  
-      "createPhoto": {
-        "required": ["title", "body"],
+
+      "bookAppointment": {
         "properties": {
-          "title": {
+          "user_id": {
             "type": "string",
             "uniqueItems": true
           },
-          "body": {
-            "type": "string",
-            "uniqueItems": true
-          }
-        }
-      },
-  
-      "updatePhoto": {
-        "properties": {
-          "title": {
+          "doctor_id": {
             "type": "string",
             "uniqueItems": true
           },
-          "body": {
-            "type": "string",
-            "uniqueItems": true
-          }
-        }
-      },
-  
-      "createStory": {
-        "required": ["title", "body"],
-        "properties": {
-          "title": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "body": {
-            "type": "string",
-            "uniqueItems": true
-          }
-        }
-      },
-  
-      "updateStory": {
-        "properties": {
-          "title": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "body": {
-            "type": "string",
-            "uniqueItems": true
-          }
-        }
-      },
-  
-      "createVideo": {
-        "required": ["link"],
-        "properties": {
-          "link": {
-            "type": "string",
-            "uniqueItems": true
-          }
-        }
-      },
-  
-      "updateVideo": {
-        "properties": {
-          "link": {
-            "type": "string",
-            "uniqueItems": true
-          }
-        }
-      },
-  
-      "createResearch": {
-        "required": [
-          "description",
-          "title",
-          "shortDesc",
-          "producer",
-          "catch",
-          "img"
-        ],
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "shortDesc": {
-            "type": "string"
-          },
-          "producer": {
-            "type": "string"
-          },
-          "catch": {
-            "type": "string"
-          },
-          "img": {
-            "type": "string"
-          },
-          "date": {
+          "slot": {
             "type": "string"
           }
         }
       },
-  
-      "updateResearch": {
+
+      "updateProfile": {
         "properties": {
-          "link": {
-            "type": "string",
-            "uniqueItems": true
-          }
-        }
-      },
-  
-      "createPodcast": {
-        "required": ["link"],
-        "properties": {
-          "link": {
-            "type": "string",
-            "uniqueItems": true
-          }
-        }
-      },
-  
-      "updatePodcast": {
-        "properties": {
-          "link": {
-            "type": "string",
+          "slots": {
+            "type": "array",
+            "items":{"type":"string"},
             "uniqueItems": true
           }
         }

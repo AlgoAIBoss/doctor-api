@@ -11,7 +11,7 @@
     "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
     "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  }, 
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OpenNotes-tech/backend-opennotes.git"
@@ -40,6 +40,7 @@
     "html-to-text": "^9.0.5",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.2",
+    "node-schedule": "^2.1.1",
     "nodemailer": "^6.9.3",
     "pug": "^3.0.2",
     "swagger-ui-express": "^4.6.3",

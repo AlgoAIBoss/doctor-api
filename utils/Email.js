@@ -3,10 +3,11 @@ const pug = require("pug");
 const { convert } = require("html-to-text");
 
 module.exports = class Email {
-  constructor(user, url) {
+  constructor(user, doctor, slot) {
     this.to = user.email;
-    this.firstName = user.firstName;
-    this.url = url;
+    this.firstName = user.name;
+    this.doctor = doctor;
+    this.slot = slot;
     this.from = `Doctor <${process.env.EMAIL_FROM}>`;
   }
 
@@ -26,8 +27,9 @@ module.exports = class Email {
   async send(template, subject) {
     // 1) Render HTML based on a pug template
     const html = pug.renderFile(`${__dirname}/../views/mail/${template}.pug`, {
-      firstName: this.firstName,
-      url: this.url,
+      userName: this.firstName,
+      doctorName: this.doctor.name,
+      appointmentTime: this.slot,
       subject,
     });
 

@@ -2,10 +2,10 @@ const crypto = require("crypto");
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
-const User = require("./../models/UserModel");
+const Doctor = require("./../models/DoctorModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
-const Email = require("../utils/email");
+const Email = require("./../utils/email");
 const axios = require("axios");
 
 // ##########################
@@ -24,7 +24,7 @@ const createSendToken = (user, statusCode, req, res) => {
   res.cookie("jwt", token, {
     expires: expiry,
     httpOnly: true,
-    // secure: req.secure || req.headers["x-forwarded-proto"] === "https",
+    secure: req.secure || req.headers["x-forwarded-proto"] === "https",
   });
 
   // Remove password from output
@@ -42,7 +42,7 @@ const createSendToken = (user, statusCode, req, res) => {
 // ##########################
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const newUser = await User.create({
+  const newUser = await Doctor.create({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
@@ -51,7 +51,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   // const url = `${req.protocol}://${req.get("host")}/me`;
   // await new Email(newUser, url).sendWelcome();
-
   createSendToken(newUser, 201, req, res);
 });
 
@@ -67,7 +66,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError("Please provide email and password!", 400));
   }
   // 2) Check if candidate exists && password is correct
-  const candidate = await User.findOne({ email }).select("+password");
+  const candidate = await Doctor.findOne({ email }).select("+password");
   // console.log(candidate.password, password);
   if (
     !candidate ||
@@ -116,7 +115,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // 3) Check if candidate still exists
-  const currentUser = await User.findById(decoded.id);
+  const currentUser = await Doctor.findById(decoded.id);
   if (!currentUser) {
     return next(
       new AppError(
@@ -129,7 +128,10 @@ exports.protect = catchAsync(async (req, res, next) => {
   // 4) Check if candidate changed password after the token was issued
   if (currentUser.changedPasswordAfter(decoded.iat)) {
     return next(
-      new AppError("User recently changed password! Please log in again.", 401)
+      new AppError(
+        "Doctor recently changed password! Please log in again.",
+        401
+      )
     );
   }
 
@@ -153,7 +155,7 @@ exports.isLoggedIn = async (req, res, next) => {
       );
 
       // 2) Check if candidate still exists
-      const currentUser = await User.findById(decoded.id);
+      const currentUser = await Doctor.findById(decoded.id);
       if (!currentUser) {
         return next();
       }
@@ -194,7 +196,7 @@ exports.restrictTo = (...roles) => {
 // ###################################
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get candidate based on POSTed email
-  const candidate = await User.findOne({ email: req.body.email });
+  const candidate = await Doctor.findOne({ email: req.body.email });
   if (!candidate) {
     return next(new AppError("There is no candidate with email address.", 404));
   }
@@ -236,7 +238,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     .update(req.params.token)
     .digest("hex");
 
-  const candidate = await User.findOne({
+  const candidate = await Doctor.findOne({
     passwordResetToken: hashedToken,
     passwordResetExpires: { $gt: Date.now() },
   });
@@ -261,7 +263,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 // ###################################
 exports.updatePassword = catchAsync(async (req, res, next) => {
   // 1) Get candidate from collection
-  const candidate = await User.findById(req.candidate.id).select("+password");
+  const candidate = await Doctor.findById(req.candidate.id).select("+password");
 
   // 2) Check if POSTed current password is correct
   if (
@@ -277,7 +279,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   candidate.password = req.body.password;
   candidate.passwordConfirm = req.body.passwordConfirm;
   await candidate.save();
-  // User.findByIdAndUpdate will NOT work as intended!
+  // Doctor.findByIdAndUpdate will NOT work as intended!
 
   // 4) Log candidate in, send JWT
   createSendToken(candidate, 200, req, res);
@@ -295,7 +297,7 @@ exports.googleLogin = (req, res) => {
     .then((response) => {
       const { email_verified, name, email } = response.payload;
       if (email_verified) {
-        User.findOne({ email }).exec((err, candidate) => {
+        Doctor.findOne({ email }).exec((err, candidate) => {
           if (candidate) {
             const url = `${req.protocol}://${req.get("host")}/me`;
             new Email(candidate, url).sendWelcome();
@@ -303,7 +305,7 @@ exports.googleLogin = (req, res) => {
           } else {
             let password = email + process.env.JWT_SECRET;
 
-            candidate = new User({
+            candidate = new Doctor({
               email,
               password,
               confirmPassword: password,
@@ -313,7 +315,7 @@ exports.googleLogin = (req, res) => {
               if (err) {
                 console.log("ERROR GOOGLE LOGIN ON USER SAVE", err);
                 return res.status(400).json({
-                  error: "User signup failed with google",
+                  error: "Doctor signup failed with google",
                 });
               }
               const url = `${req.protocol}://${req.get("host")}/me`;
@@ -345,17 +347,17 @@ exports.facebookLogin = (req, res) => {
     .then((response) => response.json())
     .then((response) => {
       const { email, name } = response;
-      User.findOne({ email }).exec((err, candidate) => {
+      Doctor.findOne({ email }).exec((err, candidate) => {
         if (candidate) {
           createSendToken(candidate, 200, req, res);
         } else {
           let password = email + process.env.JWT_SECRET;
-          candidate = new User({ name, email, password });
+          candidate = new Doctor({ name, email, password });
           candidate.save((err, data) => {
             if (err) {
               console.log("ERROR FACEBOOK LOGIN ON USER SAVE", err);
               return res.status(400).json({
-                error: "User signup failed with facebook",
+                error: "Doctor signup failed with facebook",
               });
             }
             createSendToken(data, 200, req, res);

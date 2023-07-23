@@ -1,6 +1,10 @@
 const User = require("../models/UserModel");
+const Doctor = require("../models/DoctorModel");
 const catchAsync = require("./../utils/catchAsync");
 const factory = require("./MiddlewareController");
+const Email = require("../utils/email");
+const { scheduleReminder } = require("./remController");
+
 
 // ###############################
 //     User Profile Info
@@ -8,6 +12,7 @@ const factory = require("./MiddlewareController");
 exports.getUser = factory.getOne(User);
 exports.deleteUser = factory.deleteMe(User);
 exports.updateUser = factory.updateOne(User);
+
 
 // Get all folders in the user's profile
 exports.createAppointment = catchAsync(async (req, res) => {
@@ -21,21 +26,31 @@ exports.createAppointment = catchAsync(async (req, res) => {
     return res.status(404).json({ message: "User or doctor not found" });
   }
 
-  // Check if the slot is available
-  if (!doctor.slots.includes(slot)) {
+  // Convert the slot to the ISO 8601 format
+  const isoSlot = new Date(slot).toISOString();
+
+  // Check if the user's slot exists in the doctor's slots
+  const isSlotAvailable = doctor.slots.some((doctorSlot) => {
+    // Convert the doctorSlot to ISO string format
+    const doctorSlotISOString = new Date(doctorSlot).toISOString();
+    return doctorSlotISOString === isoSlot;
+  });
+
+  if (!isSlotAvailable) {
     return res.status(400).json({ message: "Slot is not available" });
   }
 
   // Update the doctor's slots and save the appointment
-  doctor.slots = doctor.slots.filter((s) => s !== slot);
+  doctor.slots = doctor.slots.filter((doctorSlot) => {
+    // Convert the doctorSlot to ISO string format
+    const doctorSlotISOString = new Date(doctorSlot).toISOString();
+    return doctorSlotISOString !== isoSlot;
+  });
+
   await doctor.save();
 
-  // Schedule the reminders
-  scheduleReminder(user, doctor, slot);
-
-  // Send a welcome email to the user
-  const email = new Email(user);
-  await email.sendWelcome();
+  // Schedule the reminders using node-schedule
+  scheduleReminder(user, doctor, isoSlot);
 
   return res.status(201).json({ message: "Appointment created successfully" });
 });

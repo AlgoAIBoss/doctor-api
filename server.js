@@ -11,7 +11,7 @@ process.on("uncaughtException", (err) => {
 
 dotenv.config({ path: path.resolve(__dirname, "./config.env") });
 
-const port = process.env.APP_PORT || 8000;
+const port = process.env.APP_PORT || 3000;
 const server = app.listen(port, () => {
   console.log(`App running on port ${port}....`);
 });
